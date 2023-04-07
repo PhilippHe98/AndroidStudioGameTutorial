@@ -11,6 +11,8 @@ public class Player {
     private double positionY;
     private double radius;
     private Paint paint;
+    private static final double SPEED_PIXELS_PER_SECOND = 600.0;
+    private static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS;
 
     public Player(Context context, double positionX, double positionY, double radius) {
         this.positionX = positionY;
@@ -22,10 +24,15 @@ public class Player {
     }
 
     public void draw(Canvas canvas) {
-        canvas.drawCircle((float)positionX,(float) positionY, (float) radius, paint);
+        canvas.drawCircle((float) positionX, (float) positionY, (float) radius, paint);
     }
 
-    public void update() {
+    public void update(Joystick joystick) {
+        double velocityX = joystick.getActuatorX() * MAX_SPEED;
+        double velocityY = joystick.getActuatorY() * MAX_SPEED;
+        positionX+= velocityX;
+        positionY+=velocityY;
+
     }
 
     public void setPosition(float x, float y) {
