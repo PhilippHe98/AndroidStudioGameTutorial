@@ -10,8 +10,13 @@ import android.view.SurfaceView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.example.myapplication.object.Circle;
 import com.example.myapplication.object.Enemy;
 import com.example.myapplication.object.Player;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /*
 * Game manages all objects in the game and is responsible for updating all states and render all objects to the screen
@@ -19,7 +24,7 @@ import com.example.myapplication.object.Player;
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Joystick joystick;
-    private final Enemy enemy;
+    private List<Enemy> enemyList = new ArrayList<Enemy>();
     private GameLoop gameLoop;
 
     public Game(Context context) {
@@ -36,7 +41,6 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         // Initialize Player
         player = new Player(getContext(), 1000, 500, 30, joystick);
-        enemy = new Enemy(getContext(), 50,50,30, player);
         setFocusable(true);
     }
 
@@ -82,7 +86,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         drawFPS(canvas);
         joystick.draw(canvas);
         player.draw(canvas);
-        enemy.draw(canvas);
+        for (Enemy enemy: enemyList) {
+            enemy.draw(canvas);
+        }
     }
 
     public void drawUPS(Canvas canvas) {
@@ -106,6 +112,23 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         player.update();
         joystick.update();
-        enemy.update();
+
+        if(Enemy.readToSpawn()) {
+            enemyList.add(new Enemy(getContext(), player));
+        }
+
+        for(Enemy enemy : enemyList) {
+            enemy.update();
+        }
+
+        // Iterate through enemyList and check for collision between each enemy and the player
+        Iterator<Enemy> iteratorEnemy = enemyList.iterator();
+        while(iteratorEnemy.hasNext()) {
+            if (Circle.isColliding(iteratorEnemy.next(), player)) {
+            // Remove enemy if it collides with the player
+                iteratorEnemy.remove();
+            }
+        }
+
     }
 }
