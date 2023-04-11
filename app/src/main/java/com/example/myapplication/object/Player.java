@@ -12,7 +12,7 @@ public class Player extends Circle {
     private final Joystick joystick;
 
     public Player(Context context, double positionX, double positionY, double radius, Joystick joystick) {
-        super(context, positionX, positionY, radius);
+        super(context,ContextCompat.getColor(context, R.color.red) ,positionX, positionY, radius);
         this.joystick = joystick;
     }
 
@@ -23,4 +23,5 @@ public class Player extends Circle {
         positionX += velocityX;
         positionY += velocityY;
     }
+
 }

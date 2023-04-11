@@ -10,11 +10,10 @@ public abstract class Circle extends GameObject{
     private double radius;
     private Paint paint;
 
-    public Circle(Context context, double positionX, double positionY, double radius) {
+    public Circle(Context context, int color ,double positionX, double positionY, double radius) {
         super(positionX, positionY);
         this.radius = radius;
         paint = new Paint();
-        int color = ContextCompat.getColor(context, R.color.red);
         paint.setColor(color);
     }
 
