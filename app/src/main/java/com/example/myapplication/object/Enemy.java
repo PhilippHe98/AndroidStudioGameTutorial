@@ -1,8 +1,11 @@
-package com.example.myapplication;
+package com.example.myapplication.object;
 
 import android.content.Context;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.myapplication.GameLoop;
+import com.example.myapplication.R;
 
 public class Enemy extends Circle {
 

@@ -1,10 +1,12 @@
-package com.example.myapplication;
+package com.example.myapplication.object;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.myapplication.GameLoop;
+import com.example.myapplication.Joystick;
+import com.example.myapplication.R;
 
 public class Player extends Circle {
     private static final double SPEED_PIXELS_PER_SECOND = 600.0;
